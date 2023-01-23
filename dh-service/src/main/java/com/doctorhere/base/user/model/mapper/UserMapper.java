@@ -4,6 +4,7 @@ import com.doctorhere.base.user.model.Role;
 import com.doctorhere.base.user.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -24,4 +25,6 @@ public interface UserMapper {
     }
 
 
+    @Mapping(target = "password", source = "password", qualifiedByName = "passwordEncoder")
+    User updateEntity(@MappingTarget User userExist, String password);
 }
