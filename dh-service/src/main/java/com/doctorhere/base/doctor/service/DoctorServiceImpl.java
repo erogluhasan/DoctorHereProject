@@ -41,7 +41,6 @@ public class DoctorServiceImpl implements DoctorService {
             user = userExist.get();
         } else {
             user = userMapper.toEntity(doctorRequest.getEmail(), doctorRequest.getPassword(), List.of(Role.DOCTOR));
-            user.getRoles().get(0).setUser(user);
         }
 
         var doctor = doctorMapper.toEntity(doctorRequest, user);
