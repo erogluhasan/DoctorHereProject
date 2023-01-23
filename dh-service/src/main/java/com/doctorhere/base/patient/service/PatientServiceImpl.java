@@ -66,7 +66,7 @@ public class PatientServiceImpl implements PatientService {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         if(bCryptPasswordEncoder.matches(request.getPassword(), userExist.getPassword())){
             if (!StringUtils.isBlank(request.getPasswordNew())) {
-                userExist = userMapper.updateEntity(userExist, request.getPassword());
+                userExist = userMapper.updateEntity(userExist, request.getPasswordNew());
             }
         } else {
             throw new BusinessRuleException("exception.user.password.wrong");
