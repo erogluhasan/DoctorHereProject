@@ -1,5 +1,6 @@
 package com.doctorhere.base.doctor.model.dto;
 
+import com.doctorhere.base.entity.dto.AbstractDto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class DoctorRequest {
+public class DoctorRequest extends AbstractDto {
 
     private boolean newsletter;
 
@@ -33,6 +34,10 @@ public class DoctorRequest {
     @Size(min = 8, message = "validation.doctor.password.size")
     @ApiModelProperty(example = "password")
     private String password;
+
+    @Size(min = 8, message = "validation.doctor.passwordnew.size")
+    @ApiModelProperty(example = "passwordNew")
+    private String passwordNew;
 
     @NotNull
     @Size(max = 150, message = "validation.doctor.phone.size")

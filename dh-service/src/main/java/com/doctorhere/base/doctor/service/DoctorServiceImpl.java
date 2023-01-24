@@ -49,6 +49,15 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public Doctor update(DoctorRequest doctorRequest) {
-        return null;
+        var doctor = doctorRepository.findById(doctorRequest.getId()).orElseGet(() -> {
+            throw new BusinessRuleException("exception.doctor.notfound");
+        });
+
+        var userExist = userService.getByUsername(doctor.getEmail()).orElseGet(() ->{
+            throw new BusinessRuleException("exception.user.notfound");
+        });
+        userService.passwordCheckAndUpdate(doctorRequest.getPassword(), doctorRequest.getPasswordNew(), userExist);
+        doctorMapper.updateEntity(doctor, doctorRequest, userExist);
+        return doctorRepository.save(doctor);
     }
 }

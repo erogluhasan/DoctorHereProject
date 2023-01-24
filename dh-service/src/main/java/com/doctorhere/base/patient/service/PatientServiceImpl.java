@@ -12,8 +12,6 @@ import com.doctorhere.base.user.model.mapper.UserMapper;
 import com.doctorhere.base.user.service.UserService;
 import com.doctorhere.common.exception.BusinessRuleException;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,20 +55,8 @@ public class PatientServiceImpl implements PatientService {
         var userExist = userService.getByUsername(patient.getEmail()).orElseGet(() ->{
             throw new BusinessRuleException("exception.user.notfound");
         });
-        passwordCheckAndUpdate(request, userExist);
+        userService.passwordCheckAndUpdate(request.getPassword(), request.getPasswordNew(), userExist);
         patientMapper.updateEntity(patient, request, userExist);
         return patientRepository.save(patient);
-    }
-
-    private User passwordCheckAndUpdate(PatientRequest request, User userExist) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        if(bCryptPasswordEncoder.matches(request.getPassword(), userExist.getPassword())){
-            if (!StringUtils.isBlank(request.getPasswordNew())) {
-                userExist = userMapper.updateEntity(userExist, request.getPasswordNew());
-            }
-        } else {
-            throw new BusinessRuleException("exception.user.password.wrong");
-        }
-        return userExist;
     }
 }

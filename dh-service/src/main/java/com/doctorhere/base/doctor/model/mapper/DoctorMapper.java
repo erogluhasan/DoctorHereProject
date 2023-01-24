@@ -18,6 +18,11 @@ public interface DoctorMapper extends BaseDoctorMapper {
     @Mapping(target = "doctorProfessionsIdList", source = "doctorProfessionsSet", qualifiedByName = "extractDoctorProfessionsIdList")
     DoctorResponse toResponse(Doctor doctor);
 
+    @Mapping(target = "user", source = "user")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "email", ignore = true)
+    void updateEntity(@MappingTarget Doctor doctor, DoctorRequest doctorRequest, User user);
+
     @BeforeMapping
     default void doBeforeMapping(@MappingTarget Doctor doctor, DoctorRequest doctorRequest, User user) {
         doctor.setProfession(null);
