@@ -23,7 +23,7 @@ public class DoctorController {
     }
 
     @PutMapping("update")
-    public ResponseEntity updatePatient(@Valid @RequestBody DoctorRequest doctorRequest) {
+    public ResponseEntity updateDoctor(@Valid @RequestBody DoctorRequest doctorRequest) {
         doctorService.update(doctorRequest);
         return new ResponseEntity(HttpStatus.OK);
     }

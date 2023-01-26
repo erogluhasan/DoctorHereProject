@@ -13,6 +13,7 @@ public interface DoctorMapper extends BaseDoctorMapper {
     @Mapping(target = "user", source = "user")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "profession.id", source = "doctorRequest.professionId")
+    @Mapping(target = "approved", constant = "false")
     Doctor toEntity(DoctorRequest doctorRequest, User user);
 
     @Mapping(target = "doctorProfessionsIdList", source = "doctorProfessionsSet", qualifiedByName = "extractDoctorProfessionsIdList")
@@ -21,6 +22,7 @@ public interface DoctorMapper extends BaseDoctorMapper {
     @Mapping(target = "user", source = "user")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "email", ignore = true)
+    @Mapping(target = "approved", ignore = true)
     void updateEntity(@MappingTarget Doctor doctor, DoctorRequest doctorRequest, User user);
 
     @BeforeMapping
