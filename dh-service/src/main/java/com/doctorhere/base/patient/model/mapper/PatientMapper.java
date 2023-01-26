@@ -16,6 +16,7 @@ public interface PatientMapper {
     Patient toEntity(PatientRequest patientRequest, User user);
 
     PatientResponse toResponse(Patient patient);
+
     @Mapping(target = "user", source = "user")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "email", ignore = true)
