@@ -57,6 +57,7 @@ public class InspectionTimeServiceImpl implements InspectionTimeService {
         LocalDateTime periodTime;
         List<LocalDateTime> localDateTimes = new ArrayList<>();
         boolean isValidTime;
+        localDateTimes.add(startTime);
         do {
             periodTime = startTime.plusMinutes(periodMinute);
             isValidTime = periodTime.isBefore(finishTime);

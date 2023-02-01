@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Where(clause = "deleted = false")
 public class InspectionTime extends BaseEntity {
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 

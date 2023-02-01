@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public interface InspectionTimeMapper {
 
     @Mapping(target = "doctor.id", source = "doctorId")
-    InspectionTime toEntity(Long doctorId, LocalDateTime startTime, boolean voice, boolean video, boolean chat);
+    InspectionTime toEntity(Long doctorId, LocalDateTime startTime, boolean voiceInspection, boolean videoInspection, boolean chatInspection);
 
 
 

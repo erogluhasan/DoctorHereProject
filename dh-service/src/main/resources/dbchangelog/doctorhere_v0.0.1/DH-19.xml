@@ -13,7 +13,7 @@
                 deleted            boolean default false,
                 version            numeric default 0 not null,
                 doctor_id        int,
-                start_time       date,
+                start_time       timestamp,
                 video_inspection boolean,
                 chat_inspection  boolean,
                 voice_inspection boolean
@@ -26,6 +26,8 @@
             alter table dhservice.dh_doctor add video_inspection boolean;
 
             alter table dhservice.dh_doctor add chat_inspection boolean;
+
+            alter table dhservice.dh_doctor add inspection_period_minute int;
 
         </sql>
     </changeSet>
