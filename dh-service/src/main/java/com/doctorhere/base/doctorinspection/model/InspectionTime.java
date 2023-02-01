@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -27,5 +28,9 @@ public class InspectionTime extends BaseEntity {
     private boolean videoInspection;
 
     private boolean chatInspection;
+
+    private LocalTime timeRangeStart;
+
+    private LocalTime timeRangeFinish;
 
 }

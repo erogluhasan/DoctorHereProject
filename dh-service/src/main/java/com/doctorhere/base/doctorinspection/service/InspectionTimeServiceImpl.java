@@ -34,41 +34,51 @@ public class InspectionTimeServiceImpl implements InspectionTimeService {
         List<InspectionTime> inspectionTimes = new ArrayList<>();
 
         inspectionTimeRequestList.forEach(inspectionTimeRequest -> {
-            List<LocalDateTime> inspectionTimeValues = calculateAndGetPeriodList(doctor.getInspectionPeriodMinute(), inspectionTimeRequest.getStartHour(), inspectionTimeRequest.getFinishHour());
+            List<LocalDateTime> inspectionTimeValues = calculateAndGetPeriodList(doctor.getInspectionPeriodMinute(), inspectionTimeRequest);
             inspectionTimeValues.forEach(inspectionTime -> {
                 inspectionTimes.add(
                         inspectionTimeMapper.toEntity(
-                                doctor.getId(),
+                                doctor,
                                 inspectionTime,
-                                doctor.getVoiceInspection(),
-                                doctor.getVideoInspection(),
-                                doctor.getChatInspection()
+                                inspectionTimeRequest
                         ));
             });
 
         });
-
         inspectionTimeRepository.saveAll(inspectionTimes);
-
     }
 
 
-    private List<LocalDateTime> calculateAndGetPeriodList(Integer periodMinute, LocalDateTime startTime, LocalDateTime finishTime) {
+    private List<LocalDateTime> calculateAndGetPeriodList(Integer inspectionPeriodMinute, InspectionTimeRequest inspectionTimeRequest) {
         LocalDateTime periodTime;
         List<LocalDateTime> localDateTimes = new ArrayList<>();
         boolean isValidTime;
-        localDateTimes.add(startTime);
-        do {
-            periodTime = startTime.plusMinutes(periodMinute);
-            isValidTime = periodTime.isBefore(finishTime);
-            if (isValidTime) {
-                localDateTimes.add(periodTime);
-                startTime = periodTime;
-            }
+        LocalDateTime startTime = inspectionTimeRequest.getTimeStart();
 
-        } while (isValidTime);
+        if (checkTimeRange(startTime, inspectionTimeRequest)) {
+            localDateTimes.add(startTime);
+            do {
+                periodTime = startTime.plusMinutes(inspectionPeriodMinute);
+                isValidTime = periodTime.isBefore(inspectionTimeRequest.getTimeFinish()) && checkTimeRange(startTime, inspectionTimeRequest);
+                if (isValidTime) {
+                    localDateTimes.add(periodTime);
+                    startTime = periodTime;
+                }
+
+            } while (isValidTime);
+        }
 
         return localDateTimes;
+    }
+
+    private boolean checkTimeRange(LocalDateTime selectedTime, InspectionTimeRequest inspectionTimeRequest) {
+        LocalDateTime startTime = selectedTime.toLocalDate().atTime(inspectionTimeRequest.getTimeRangeStart());
+        LocalDateTime finishTime = selectedTime.toLocalDate().atTime(inspectionTimeRequest.getTimeRangeFinish());
+
+        if (startTime != null & finishTime != null
+                & (selectedTime.isAfter(finishTime) || selectedTime.isBefore(startTime)))
+            return false;
+        return true;
     }
 
 }

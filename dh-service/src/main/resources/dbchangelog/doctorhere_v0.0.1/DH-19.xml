@@ -14,6 +14,8 @@
                 version            numeric default 0 not null,
                 doctor_id        int,
                 start_time       timestamp,
+                time_range_start time,
+                time_range_finish time,
                 video_inspection boolean,
                 chat_inspection  boolean,
                 voice_inspection boolean
