@@ -35,6 +35,14 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public Doctor findById(Long id) {
+        var doctor = doctorRepository.findById(id).orElseGet(() -> {
+            throw new BusinessRuleException("exception.doctor.notfound");
+        });
+        return doctor;
+    }
+
+    @Override
     @Transactional
     public void create(DoctorRequest doctorRequest) {
         User user;

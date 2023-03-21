@@ -59,4 +59,12 @@ public class PatientServiceImpl implements PatientService {
         patientMapper.updateEntity(patient, request, userExist);
         return patientRepository.save(patient);
     }
+
+    @Override
+    public Patient getById(Long id) {
+        var patient = patientRepository.findById(id).orElseGet(() -> {
+            throw new BusinessRuleException("exception.patient.notfound");
+        });
+        return patient;
+    }
 }

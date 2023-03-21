@@ -9,4 +9,5 @@ public interface PatientService {
 
     Patient update(PatientRequest patientRequest);
 
+    Patient getById(Long id);
 }
