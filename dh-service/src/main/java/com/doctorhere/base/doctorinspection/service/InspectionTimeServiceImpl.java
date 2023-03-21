@@ -8,6 +8,7 @@ import com.doctorhere.base.doctorinspection.model.mapper.InspectionTimeMapper;
 import com.doctorhere.base.doctorinspection.repository.InspectionTimeRepository;
 
 
+import com.doctorhere.common.exception.BusinessRuleException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,7 @@ public class InspectionTimeServiceImpl implements InspectionTimeService {
     @Override
     @Transactional
     public void create(List<InspectionTimeRequest> inspectionTimeRequestList) {
-        Doctor doctor = doctorService.getById(1L);//TODO  doktor token ile alınacak
+        Doctor doctor = doctorService.getById(1L);//TODO doktor token ile alınacak
 
         List<InspectionTime> inspectionTimes = new ArrayList<>();
 
@@ -46,6 +47,14 @@ public class InspectionTimeServiceImpl implements InspectionTimeService {
 
         });
         inspectionTimeRepository.saveAll(inspectionTimes);
+    }
+
+    @Override
+    public InspectionTime getByIdAndDoctorId(Long inspectionTimeId, Long doctorId) {
+        var inspectionTime = inspectionTimeRepository.findByIdAndDoctorId(inspectionTimeId, doctorId).orElseGet(() -> {
+            throw new BusinessRuleException("exception.inspectionTime.notfound");
+        });
+        return inspectionTime;
     }
 
 

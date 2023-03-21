@@ -7,6 +7,7 @@ public interface DoctorService {
 
     Doctor getById(Long id);
 
+    Doctor findById(Long id);
     void create(DoctorRequest doctorRequest);
 
     Doctor update(DoctorRequest doctorRequest);
