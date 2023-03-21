@@ -45,6 +45,13 @@ public class Doctor extends BaseEntity {
     private Boolean online;
     private Boolean approved;
 
+    private Integer inspectionPeriodMinute;
+
+    private Boolean voiceInspection;
+    private Boolean videoInspection;
+    private Boolean chatInspection;
+
+
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinTable(
             name = "doctor_profession",

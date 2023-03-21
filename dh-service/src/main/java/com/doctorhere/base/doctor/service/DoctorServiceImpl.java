@@ -14,7 +14,6 @@ import com.doctorhere.common.exception.BusinessRuleException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -26,6 +25,14 @@ public class DoctorServiceImpl implements DoctorService {
     private final DoctorMapper doctorMapper;
     private final UserMapper userMapper;
     private final UserService userService;
+
+    @Override
+    public Doctor getById(Long id) {
+        var doctor = doctorRepository.findByUserId(id).orElseGet(() -> {
+            throw new BusinessRuleException("exception.doctor.notfound");
+        });
+        return doctor;
+    }
 
     @Override
     @Transactional
