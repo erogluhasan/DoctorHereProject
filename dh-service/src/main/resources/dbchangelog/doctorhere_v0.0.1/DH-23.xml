@@ -1,0 +1,27 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+    <changeSet author="hasan.eroglu" id="DH-23 2023-03-22 14:00" context="data">
+        <sql splitStatements="true">
+            insert into dh_profession (id, deleted, version, name,
+                                       description, "time", sort_order, status)
+            values (1, false, 0, 'Çocuk Hastalıkları', 'Çocuk hastalıkları ile ilgilenen ana bilim dalı', 30, 1 , true);
+
+            insert into dh_doctor (id, deleted, version, user_id,
+                                   newsletter, name, surname, email, phone, certificate_no,
+                                   profession_id, approved,
+                                   voice_inspection, video_inspection, chat_inspection, inspection_period_minute)
+            values (1, false, 0, 19, false, 'Hasan', 'Eroğlu', 'dhkullanici@gmail.com', '5454762736', 'CE-456', 1, true, true, true, true, 25 );
+
+            insert into dh_patient (id, deleted, version, user_id,
+                                    newsletter, name, surname, email, phone)
+            values (1, false, 0, 20, true, 'Mustafa', 'Güleç', 'dhkullanici1@gmail.com', '5454762736');
+
+            insert into dh_appointment (id, deleted, version,
+                                        doctor_id, patient_id, appointment_time, status, fee, cost,
+                                        appointment_type, note)
+            values (1, false, 0, 1, 1, current_timestamp, 'WAITING_APPROVED',  10, 11 , 'VIDEO', 'deneme');
+</sql>
+    </changeSet>
+
+
+</databaseChangeLog>
