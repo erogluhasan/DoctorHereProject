@@ -57,4 +57,24 @@ public class AppointmentController {
             return new ResponseEntity(appointmentResponses, HttpStatus.OK);
         }
     }
+
+    @ApiOperation(value = "doktor randevu listesi", response = AppointmentResponse.class, responseContainer = "List")
+    @RequestMapping(value = "doctor/list/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity listAllDoctorAppointments(
+            @RequestParam(name = "status", required = false) EnumAppointmentStatus status,
+            @RequestParam(name = "pageNumber", required = false, defaultValue = "1") Integer pageNumber,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "20") Integer pageSize,
+            @RequestParam(name = "sortingDirection", required = false, defaultValue = "ASC") String sortingDirection,
+            @RequestParam(name = "sortingName", required = false, defaultValue = "id") String sortingName,
+            @RequestParam(name = "pageable", required = false, defaultValue = "true") Boolean pageable
+    ) {
+        //TODO patient için id tokenden alınacak
+        if (pageable) {
+            Page<AppointmentResponse> appointmentResponses = appointmentService.findAllPageable(pageNumber, pageSize, sortingDirection, sortingName, status, null, 1L).map(appointmentMapper::toResponse);
+            return new ResponseEntity(appointmentResponses, HttpStatus.OK);
+        } else {
+            List<AppointmentResponse> appointmentResponses = appointmentMapper.toResponse(appointmentService.findAllList(sortingDirection, sortingName, status, null, 1L));
+            return new ResponseEntity(appointmentResponses, HttpStatus.OK);
+        }
+    }
 }

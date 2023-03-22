@@ -12,6 +12,8 @@ import java.util.List;
 public class AppointmentResponse {
     private String doctorName;
     private String doctorSurname;
+    private String patientName;
+    private String patientSurname;
     private String note;
     private EnumAppointmentStatus appointmentStatus;
     private LocalDateTime appointmentTime;
