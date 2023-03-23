@@ -50,7 +50,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Optional<Appointment> findByDoctorIdAndAppointmentTime(Long doctorId, LocalDateTime startTime) {
         return appointmentRepository.findByDoctorIdAndAppointmentTime(doctorId, startTime);
     }
-     @Override
+
+    @Override
     public Page<Appointment> findAllPageable(Integer pageNumber, Integer pageSize, String sortingDirection, String sortingName, EnumAppointmentStatus status, Long patientId, Long doctorId) {
         Sort.Direction direction;
         if (sortingDirection.equals("ASC")) {
@@ -74,23 +75,22 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 
     @Override
-    public void delete(AppointmentRequest appointmentRequest) {
-        appointmentRepository.findById(appointmentRequest.getId()).ifPresentOrElse((appointment) ->{
-            if(appointmentIsDeletable(appointment)){
+    public void cancel(AppointmentRequest appointmentRequest, Long doctorId, Long patientId) {
+        appointmentRepository.findByIdAndDoctorIdAndPatientId(appointmentRequest.getId(), doctorId, patientId).ifPresentOrElse((appointment) -> {
+            if (appointmentIsDeletable(appointment)) {
                 appointment.setAppointmentStatus(EnumAppointmentStatus.CANCELED);
                 appointment.setCancelTime(LocalDateTime.now());
                 appointment.setCancelReason(appointmentRequest.getCancelReason());
                 appointmentRepository.save(appointment);
             }
-        },() -> {
+        }, () -> {
             throw new BusinessRuleException("exception.appointment.notfound");
         });
     }
 
     private boolean appointmentIsDeletable(Appointment appointment) {
         //TODO iş akışlarını uygula, onaylı ise nasıl olmalı?
-        if(!appointment.getAppointmentStatus().equals(EnumAppointmentStatus.WAITING_APPROVED) ||
-                appointment.getAppointmentTime().isBefore(LocalDateTime.now())){
+        if (!appointment.getAppointmentStatus().equals(EnumAppointmentStatus.WAITING_APPROVED) || appointment.getAppointmentTime().isBefore(LocalDateTime.now())) {
             throw new BusinessRuleException("exception.appointment.cancel.notavailable");
         }
         return true;

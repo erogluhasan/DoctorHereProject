@@ -21,4 +21,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     Page<Appointment> findAllPageable(@Param("status") EnumAppointmentStatus status, Pageable request, @Param("patientId") Long patientId, @Param("doctorId") Long doctorId);
     @Query(value="select ap from Appointment ap  where (:status is null or ap.appointmentStatus = :status) and ap.deleted=false and (:patientId is null or ap.patient.id = :patientId) and (:doctorId is null or ap.doctor.id = :doctorId)")
     List<Appointment> findAllList(@Param("status") EnumAppointmentStatus status, Sort sort, @Param("patientId") Long patientId, @Param("doctorId") Long doctorId);
+
+    @Query(value="select ap from Appointment ap  where ap.id= :id and ap.deleted=false and (:patientId is null or ap.patient.id = :patientId) and (:doctorId is null or ap.doctor.id = :doctorId)")
+    Optional<Appointment> findByIdAndDoctorIdAndPatientId(@Param("id") Long id, @Param("doctorId") Long doctorId, @Param("patientId") Long patientId);
 }
