@@ -1,15 +1,10 @@
 package com.doctorhere.base.appointment;
 
 import com.doctorhere.base.appointment.enums.EnumAppointmentStatus;
-import com.doctorhere.base.appointment.model.Appointment;
 import com.doctorhere.base.appointment.model.dto.AppointmentRequest;
 import com.doctorhere.base.appointment.model.dto.AppointmentResponse;
 import com.doctorhere.base.appointment.model.mapper.AppointmentMapper;
 import com.doctorhere.base.appointment.service.AppointmentService;
-import com.doctorhere.base.patient.model.dto.PatientRequest;
-import com.doctorhere.base.patient.service.PatientService;
-import com.doctorhere.base.profession.model.Profession;
-import com.doctorhere.base.profession.model.dto.ProfessionResponseDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,10 +25,14 @@ public class AppointmentController {
     private final AppointmentService appointmentService;
     private final AppointmentMapper appointmentMapper;
 
-    @PostMapping("patient")
+    @PostMapping("/save")
     public ResponseEntity createPatient(@RequestBody AppointmentRequest appointmentRequest) {
         appointmentService.create(appointmentRequest);
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+    @PutMapping("cancel")
+    public void delete(@RequestBody AppointmentRequest appointmentRequest){
+        appointmentService.delete(appointmentRequest);
     }
 
 

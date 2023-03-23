@@ -12,13 +12,11 @@ import com.doctorhere.base.doctorinspection.model.InspectionTime;
 import com.doctorhere.base.doctorinspection.service.InspectionTimeService;
 import com.doctorhere.base.patient.model.Patient;
 import com.doctorhere.base.patient.service.PatientService;
-import com.doctorhere.base.profession.model.Profession;
 import com.doctorhere.common.exception.BusinessRuleException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -74,5 +72,28 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentRepository.findAllList(status, Sort.by(direction, sortingName), patientId, doctorId);
     }
 
+
+    @Override
+    public void delete(AppointmentRequest appointmentRequest) {
+        appointmentRepository.findById(appointmentRequest.getId()).ifPresentOrElse((appointment) ->{
+            if(appointmentIsDeletable(appointment)){
+                appointment.setAppointmentStatus(EnumAppointmentStatus.CANCELED);
+                appointment.setCancelTime(LocalDateTime.now());
+                appointment.setCancelReason(appointmentRequest.getCancelReason());
+                appointmentRepository.save(appointment);
+            }
+        },() -> {
+            throw new BusinessRuleException("exception.appointment.notfound");
+        });
+    }
+
+    private boolean appointmentIsDeletable(Appointment appointment) {
+        //TODO iş akışlarını uygula, onaylı ise nasıl olmalı?
+        if(!appointment.getAppointmentStatus().equals(EnumAppointmentStatus.WAITING_APPROVED) ||
+                appointment.getAppointmentTime().isBefore(LocalDateTime.now())){
+            throw new BusinessRuleException("exception.appointment.cancel.notavailable");
+        }
+        return true;
+    }
 
 }
