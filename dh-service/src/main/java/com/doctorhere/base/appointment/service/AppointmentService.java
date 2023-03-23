@@ -12,5 +12,5 @@ public interface AppointmentService {
 
     void create(AppointmentRequest appointmentRequest);
     Optional<Appointment> findByDoctorIdAndAppointmentTime(Long doctorId, LocalDateTime startTime);
-
+    void delete(AppointmentRequest appointmentRequest);
 }

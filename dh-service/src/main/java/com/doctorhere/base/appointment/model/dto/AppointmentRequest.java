@@ -39,4 +39,6 @@ public class AppointmentRequest extends AbstractDto {
     @ApiModelProperty(example = "cost", value = "1.1")
     private Double cost;
 
+    @ApiModelProperty(example = "cancelReason", value = "iptal denemesi")
+    private String cancelReason;
 }
