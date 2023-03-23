@@ -1,6 +1,7 @@
 package com.doctorhere.base.appointment.service;
 
 
+import com.doctorhere.base.appointment.enums.EnumAppointmentStatus;
 import com.doctorhere.base.appointment.model.Appointment;
 import com.doctorhere.base.appointment.model.dto.AppointmentRequest;
 import com.doctorhere.base.appointment.model.mapper.AppointmentMapper;
@@ -13,9 +14,13 @@ import com.doctorhere.base.patient.model.Patient;
 import com.doctorhere.base.patient.service.PatientService;
 import com.doctorhere.common.exception.BusinessRuleException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
