@@ -32,6 +32,8 @@ public interface AppointmentMapper {
 
     @Mapping(target = "doctorName", source = "appointment.doctor.name")
     @Mapping(target = "doctorSurname", source = "appointment.doctor.surname")
+    @Mapping(target = "patientName", source = "appointment.patient.name")
+    @Mapping(target = "patientSurname", source = "appointment.patient.surname")
     AppointmentResponse toResponse(Appointment appointment);
 
     List<AppointmentResponse> toResponse(List<Appointment> appointments);
