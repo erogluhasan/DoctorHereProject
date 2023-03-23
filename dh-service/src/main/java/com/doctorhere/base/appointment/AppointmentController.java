@@ -25,12 +25,12 @@ public class AppointmentController {
     private final AppointmentService appointmentService;
     private final AppointmentMapper appointmentMapper;
 
-    @PostMapping("/save")
+    @PostMapping("patient/save")
     public ResponseEntity createPatient(@RequestBody AppointmentRequest appointmentRequest) {
         appointmentService.create(appointmentRequest);
         return new ResponseEntity(HttpStatus.CREATED);
     }
-    @PutMapping("cancel")
+    @PutMapping("patient/cancel")
     public void delete(@RequestBody AppointmentRequest appointmentRequest){
         appointmentService.delete(appointmentRequest);
     }
