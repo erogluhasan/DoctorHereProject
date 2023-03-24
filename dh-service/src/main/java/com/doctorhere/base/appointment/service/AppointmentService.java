@@ -15,7 +15,7 @@ public interface AppointmentService {
 
     Optional<Appointment> findByDoctorIdAndAppointmentTime(Long doctorId, LocalDateTime startTime);
 
-    void delete(AppointmentRequest appointmentRequest);
+    void cancel(AppointmentRequest appointmentRequest, Long doctorId, Long patientId);
 
     Page<Appointment> findAllPageable(Integer pageNumber, Integer pageSize, String sortingDirection, String sortingName, EnumAppointmentStatus status, Long patientId, Long doctorId);
 

@@ -26,13 +26,15 @@ public class AppointmentController {
     private final AppointmentMapper appointmentMapper;
 
     @PostMapping("patient/save")
-    public ResponseEntity createPatient(@RequestBody AppointmentRequest appointmentRequest) {
+    public ResponseEntity createPatientAppointment(@RequestBody AppointmentRequest appointmentRequest) {
         appointmentService.create(appointmentRequest);
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
     @PutMapping("patient/cancel")
-    public void delete(@RequestBody AppointmentRequest appointmentRequest){
-        appointmentService.delete(appointmentRequest);
+    public void cancelPatientAppointment(@RequestBody AppointmentRequest appointmentRequest){
+        //TODO patient için id tokenden alınacak
+        appointmentService.cancel(appointmentRequest, null , 1L);
     }
 
 
@@ -75,4 +77,11 @@ public class AppointmentController {
             return new ResponseEntity(appointmentResponses, HttpStatus.OK);
         }
     }
+
+    @PutMapping("doctor/cancel")
+    public void cancelDoctorAppointment(@RequestBody AppointmentRequest appointmentRequest){
+        //TODO doctor için id tokenden alınacak
+        appointmentService.cancel(appointmentRequest, 1L, null);
+    }
+
 }
