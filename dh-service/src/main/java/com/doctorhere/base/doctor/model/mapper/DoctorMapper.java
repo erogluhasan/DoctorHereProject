@@ -6,7 +6,7 @@ import com.doctorhere.base.doctor.model.dto.DoctorResponse;
 import com.doctorhere.base.user.model.User;
 import org.mapstruct.*;
 
-@Mapper
+@Mapper(uses = {DoctorSettingsMapper.class})
 public interface DoctorMapper extends BaseDoctorMapper {
 
     @Mapping(target = "doctorProfessionsSet", source = "doctorRequest.doctorProfessionsIdList", qualifiedByName = "convertToDoctorProfessions")

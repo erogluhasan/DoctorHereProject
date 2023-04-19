@@ -76,7 +76,7 @@ public class DoctorRequest extends AbstractDto {
 
     private String cv;
 
-    private String online;
-
     private List<Long> doctorProfessionsIdList;
+
+    private DoctorSettingsRequest doctorSettings;
 }

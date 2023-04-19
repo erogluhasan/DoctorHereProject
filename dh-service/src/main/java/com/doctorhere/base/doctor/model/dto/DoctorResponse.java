@@ -22,6 +22,6 @@ public class DoctorResponse {
     private String image;
     private String video;
     private String cv;
-    private String online;
+    private DoctorSettingsResponse doctorSettings;
     private List<Long> doctorProfessionsIdList;
 }

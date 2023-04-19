@@ -1,5 +1,6 @@
 package com.doctorhere.base.doctor.model;
 
+import com.doctorhere.base.doctor.DoctorSettings;
 import com.doctorhere.base.entity.BaseEntity;
 import com.doctorhere.base.profession.model.Profession;
 import com.doctorhere.base.user.model.User;
@@ -42,14 +43,8 @@ public class Doctor extends BaseEntity {
     private String imageUrl;
     private String videoUrl;
     private String cvUrl;
-    private Boolean online;
     private Boolean approved;
 
-    private Integer inspectionPeriodMinute;
-
-    private Boolean voiceInspection;
-    private Boolean videoInspection;
-    private Boolean chatInspection;
 
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
@@ -58,5 +53,8 @@ public class Doctor extends BaseEntity {
             joinColumns = @JoinColumn(name = "doctor_id"),
             inverseJoinColumns = @JoinColumn(name = "profession_id"))
     private Set<Profession> doctorProfessionsSet = new HashSet();
+
+    @OneToOne(mappedBy = "doctor", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private DoctorSettings doctorSettings;
 
 }
