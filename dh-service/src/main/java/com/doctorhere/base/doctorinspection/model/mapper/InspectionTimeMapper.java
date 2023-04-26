@@ -16,9 +16,9 @@ public interface InspectionTimeMapper {
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "timeRangeStart", source = "inspectionTimeRequest.timeRangeStart")
     @Mapping(target = "timeRangeFinish", source = "inspectionTimeRequest.timeRangeFinish")
-    @Mapping(target = "chatInspection", source = "doctor.chatInspection")
-    @Mapping(target = "videoInspection", source = "doctor.videoInspection")
-    @Mapping(target = "voiceInspection", source = "doctor.voiceInspection")
+    @Mapping(target = "chatInspection", source = "doctor.doctorSettings.chatInspection")
+    @Mapping(target = "videoInspection", source = "doctor.doctorSettings.videoInspection")
+    @Mapping(target = "voiceInspection", source = "doctor.doctorSettings.voiceInspection")
     @Mapping(target = "doctor.id", source = "doctor.id")
     @Mapping(target = "startTime", source = "timeStart")
     InspectionTime toEntity(Doctor doctor, LocalDateTime timeStart, InspectionTimeRequest inspectionTimeRequest);

@@ -35,7 +35,7 @@ public class InspectionTimeServiceImpl implements InspectionTimeService {
         List<InspectionTime> inspectionTimes = new ArrayList<>();
 
         inspectionTimeRequestList.forEach(inspectionTimeRequest -> {
-            List<LocalDateTime> inspectionTimeValues = calculateAndGetPeriodList(doctor.getInspectionPeriodMinute(), inspectionTimeRequest);
+            List<LocalDateTime> inspectionTimeValues = calculateAndGetPeriodList(doctor.getDoctorSettings().getInspectionPeriodMinute(), inspectionTimeRequest);
             inspectionTimeValues.forEach(inspectionTime -> {
                 inspectionTimes.add(
                         inspectionTimeMapper.toEntity(

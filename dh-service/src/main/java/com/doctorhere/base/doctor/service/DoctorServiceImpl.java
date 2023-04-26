@@ -73,6 +73,7 @@ public class DoctorServiceImpl implements DoctorService {
         });
         userService.passwordCheckAndUpdate(doctorRequest.getPassword(), doctorRequest.getPasswordNew(), userExist);
         doctorMapper.updateEntity(doctor, doctorRequest, userExist);
+        doctor.getDoctorSettings().setDoctor(doctor);
         return doctorRepository.save(doctor);
     }
 }
